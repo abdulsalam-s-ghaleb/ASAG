@@ -1,194 +1,394 @@
-<script>
-	let name = 'Mohammed Ghaleb';
-	let title = 'Full Stack Developer & UI/UX Enthusiast';
-	let about = `Results-driven Software Engineer with 2+ years of experience in building scalable 
-  web applications and backend services using JavaScript, Node.js, and cloud-native technologies. 
-  Passionate about clean code, performance optimization, and solving real-world problems.`;
+<script lang="ts">
+	import type { PageData } from './$types';
+	import {
+		Download,
+		Mail,
+		MapPin,
+		Calendar,
+		Briefcase,
+		Code2,
+		Sparkles,
+		Github,
+		Linkedin,
+		Twitter,
+		ExternalLink,
+		ChevronRight,
+		Award,
+		Users,
+		Folder,
+		Send,
+		Presentation
+	} from '@lucide/svelte/icons';
+	import { onMount } from 'svelte';
 
-	let stats = [
-		{ label: 'Years Experience', value: '2+' },
-		{ label: 'Projects Completed', value: '20+' },
-		{ label: 'Happy Clients', value: '15+' },
-		{ label: 'Certifications Earned', value: '5+' }
-	];
+	export let data: PageData;
+	const { name, title, about, stats, experiences, skills, projects, socials } = data;
 
-	let experiences = [
-		{
-			role: 'Full Stack Developer',
-			company: 'Othouba Line',
-			years: '04/2024 - 04/2025',
-			location: 'Saudi Arabia',
-			desc: 'Developed invoicing & tax reporting platform with Nuxt, Next, and REST APIs. Improved performance by 35%.',
-			stack: ['Nuxt', 'Next', 'React', 'Node.js', 'NoSQL', 'REST APIs', 'Docker']
-		},
-		{
-			role: 'Full Stack Developer',
-			company: 'Freelance',
-			years: '04/2022 - Present',
-			location: 'Remote',
-			desc: 'Designed and deployed cross-platform apps with Flutter & Django. Built web apps with Nuxt & Next.',
-			stack: ['Nuxt', 'Next', 'Flutter', 'Django', 'SQL', 'APIs']
-		},
-		{
-			role: 'Full Stack Developer (Intern)',
-			company: 'MyERP Solutions Sdn Bhd',
-			years: '08/2021 - 02/2022',
-			location: 'Malaysia',
-			desc: 'Migrated SQL Server tables to MySQL. Automated Excel → DB integration reducing manual effort by 50%.',
-			stack: ['Python', 'Qt', 'MySQL', 'MSSQL', 'PHP']
-		}
-	];
+	let scrollY = 0;
+	let mounted = false;
 
-	let skills = [
-		{ name: 'Nuxt + Vue', level: '90%' },
-		{ name: 'SvelteKit + Svelte', level: '82%' },
-		{ name: 'Next + React', level: '80%' },
-		{ name: 'TypeScript / JavaScript', level: '85%' },
-		{ name: 'Node.js', level: '80%' },
-		{ name: 'Python', level: '75%' },
-		{ name: 'NoSQL Database', level: '75%' },
-		{ name: 'SQL/MySQL', level: '70%' },
-		{ name: 'Docker', level: '65%' }
-	];
+	onMount(() => {
+		mounted = true;
+		const handleScroll = () => (scrollY = window.scrollY);
+		window.addEventListener('scroll', handleScroll);
+		return () => window.removeEventListener('scroll', handleScroll);
+	});
 
-	let projects = [
-		{
-			name: 'TaxVerge',
-			desc: 'Financial management system with invoices, statements, and analytics.',
-			stack: ['Nuxt', 'NoSQL', 'TailwindCSS'],
-			link: 'https://taxverge.com'
-		},
-		{
-			name: 'ResumeGit',
-			desc: 'Online resume builder with customization and sharing.',
-			stack: ['Next', 'Remix', 'NoSQL'],
-			link: 'https://resumegit.com'
-		},
-		{
-			name: 'BonYemeni',
-			desc: 'Business event tracking with WordPress + custom PHP modules.',
-			stack: ['WordPress', 'PHP', 'MySQL'],
-			link: 'https://bonyemeni.com'
-		}
-	];
+	// Icon mapping for socials
+	const socialIcons: Record<string, any> = {
+		GitHub: Github,
+		LinkedIn: Linkedin,
+		Twitter: Twitter,
+		Email: Mail
+	};
 </script>
 
-<div class="flex min-h-screen flex-col items-center bg-base-100 px-6 py-12 text-base-content">
-	<!-- Hero -->
-	<header class="relative w-full space-y-3 text-center">
-		<!-- Background glow -->
-		<div class="absolute inset-0 -z-10">
-			<div
-				class="absolute top-[-300px] left-1/2 h-[900px] w-[900px] -translate-x-1/2 rounded-full bg-primary/20 blur-3xl"
-			></div>
-			<div
-				class="absolute top-[-200px] left-1/3 h-[700px] w-[700px] -translate-x-1/2 rounded-full bg-secondary/20 blur-3xl"
-			></div>
-		</div>
+<svelte:window bind:scrollY />
 
-		<!-- Avatar / Photo -->
-		<div class="avatar mb-4">
-			<div class="w-32 rounded-full shadow-lg ring ring-primary ring-offset-2 ring-offset-base-100">
-				<img src="/Abdulsalam_Ghaleb_DSC_03630.jpg" alt="Profile photo" />
+<div class="relative min-h-screen overflow-hidden bg-base-100">
+	<!-- Animated Background -->
+	<div class="fixed inset-0 -z-10">
+		<!-- Parallax blur effects -->
+		<div
+			class="absolute -top-[400px] left-1/2 h-[1000px] w-[1000px] -translate-x-1/2 rounded-full bg-gradient-to-r from-primary/30 to-secondary/30 blur-3xl transition-transform duration-1000"
+			style="transform: translateY({scrollY * 0.5}px) translateX(-50%)"
+		></div>
+		<div
+			class="absolute top-[200px] right-0 h-[600px] w-[600px] rounded-full bg-accent/20 blur-3xl transition-transform duration-1000"
+			style="transform: translateY({scrollY * 0.3}px)"
+		></div>
+		<div
+			class="absolute bottom-0 left-0 h-[500px] w-[500px] rounded-full bg-secondary/20 blur-3xl transition-transform duration-1000"
+			style="transform: translateY({-scrollY * 0.2}px)"
+		></div>
+
+		<!-- Grid pattern overlay -->
+		<div class="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-5"></div>
+	</div>
+
+	<div class="relative flex flex-col items-center px-6 py-12 text-base-content">
+		<!-- Hero Section -->
+		<header class="w-full space-y-4 text-center {mounted ? 'animate-fade-in' : 'opacity-0'}">
+			<!-- Avatar with animation -->
+			<div class="avatar mb-6 {mounted ? 'animate-bounce-in' : 'scale-0'}">
+				<div
+					class="relative w-36 rounded-full shadow-2xl ring-4 ring-primary ring-offset-4 ring-offset-base-100 transition-all duration-300 hover:ring-offset-8"
+				>
+					<img src="/Abdulsalam_Ghaleb_DSC_03630.jpg" alt="Profile of {name}" />
+				</div>
 			</div>
-		</div>
 
-		<!-- Name + Title -->
-		<h1 class="text-4xl font-bold text-primary">{name}</h1>
-		<p class="text-lg text-secondary">{title}</p>
-		<p class="mx-auto max-w-2xl text-neutral-content">{about}</p>
-
-		<!-- CTA buttons -->
-		<div class="mt-4 flex justify-center gap-3">
-			<a class="btn btn-primary" href="/cv.pdf" download>Download CV</a>
-			<a class="btn btn-secondary" href="#contact">Contact Me</a>
-		</div>
-	</header>
-
-	<!-- Stats -->
-	<section class="mt-12 grid gap-4 text-center md:grid-cols-4">
-		{#each stats as s}
-			<div class="stat rounded-lg bg-base-200 shadow">
-				<div class="stat-title">{s.label}</div>
-				<div class="stat-value text-primary">{s.value}</div>
+			<!-- Name + Title with stagger animation -->
+			<div class="space-y-2">
+				<h1
+					class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-5xl font-bold text-transparent {mounted
+						? 'animate-slide-up'
+						: 'translate-y-10 opacity-0'}"
+				>
+					{name}
+				</h1>
+				<p
+					class="flex items-center justify-center gap-2 text-xl text-secondary {mounted
+						? 'animate-slide-up-delay-1'
+						: 'translate-y-10 opacity-0'}"
+				>
+					<Briefcase class="h-5 w-5" />
+					{title}
+				</p>
+				<p
+					class="mx-auto max-w-2xl text-base-content/80 {mounted
+						? 'animate-slide-up-delay-2'
+						: 'translate-y-10 opacity-0'}"
+				>
+					{about}
+				</p>
 			</div>
-		{/each}
-	</section>
 
-	<!-- Experience -->
-	<section class="mt-16 w-full max-w-4xl">
-		<h2 class="mb-6 text-2xl font-semibold">Experience</h2>
-		<div class="space-y-6">
-			{#each experiences as exp}
-				<div class="card bg-base-200 p-5 shadow-md">
-					<h3 class="text-lg font-bold">{exp.role} — {exp.company}</h3>
-					<p class="text-sm text-neutral-content">{exp.years} · {exp.location}</p>
-					<p class="mt-2">{exp.desc}</p>
-					<div class="mt-3 flex flex-wrap gap-2">
-						{#each exp.stack as tech}
-							<span class="badge badge-outline badge-sm">{tech}</span>
-						{/each}
-					</div>
-				</div>
-			{/each}
-		</div>
-	</section>
-
-	<!-- Skills -->
-	<section class="mt-16 w-full max-w-4xl">
-		<h2 class="mb-6 text-2xl font-semibold">Skills</h2>
-		<div class="space-y-4">
-			{#each skills as skill}
-				<div>
-					<div class="mb-1 flex justify-between text-sm">
-						<span>{skill.name}</span>
-						<span>{skill.level}</span>
-					</div>
-					<progress class="progress w-full progress-primary" value={parseInt(skill.level)} max="100"
-					></progress>
-				</div>
-			{/each}
-		</div>
-	</section>
-
-	<!-- Projects -->
-	<section class="mt-16 w-full max-w-4xl">
-		<h2 class="mb-6 text-2xl font-semibold">Projects</h2>
-		<div class="grid gap-4 md:grid-cols-3">
-			{#each projects as proj}
-				<div class="card bg-base-200 p-4 shadow-md">
-					<h3 class="text-lg font-bold">{proj.name}</h3>
-					<p class="text-sm text-neutral-content">{proj.desc}</p>
-					<div class="mt-2 flex flex-wrap gap-1">
-						{#each proj.stack as tag}
-							<span class="badge badge-outline badge-sm">{tag}</span>
-						{/each}
-					</div>
-					<a class="btn mt-3 btn-sm btn-primary" href={proj.link} target="_blank">View</a>
-				</div>
-			{/each}
-		</div>
-	</section>
-
-	<!-- Contact -->
-	<section id="contact" class="mt-16 w-full max-w-3xl text-center">
-		<h2 class="mb-4 text-2xl font-semibold">Let's Connect</h2>
-		<p class="mb-6 text-neutral-content">
-			I'm always interested in hearing about new projects and opportunities.
-		</p>
-		<div class="flex justify-center gap-3">
-			<a class="btn btn-primary" href="mailto:mhd.s.ghaleb@gmail.com">Email</a>
-			<a class="btn btn-secondary" href="https://github.com/leaderfrank" target="_blank">GitHub</a>
-			<a class="btn btn-accent" href="https://www.linkedin.com/in/mhd-ghaleb/" target="_blank"
-				>LinkedIn</a
+			<!-- CTA buttons with hover effects -->
+			<div
+				class="mt-6 flex flex-wrap justify-center gap-4 {mounted
+					? 'animate-slide-up-delay-3'
+					: 'translate-y-10 opacity-0'}"
 			>
-		</div>
-		<p class="mt-4 text-sm text-success">Available for hire</p>
-	</section>
+				<a
+					class="group btn shadow-lg transition-all duration-300 btn-primary hover:scale-105 hover:shadow-primary/50"
+					href="/cv.pdf"
+					download
+				>
+					<Download class="h-4 w-4 transition-transform group-hover:translate-y-1" />
+					Download CV
+				</a>
+				<a
+					class="group btn shadow-lg transition-all duration-300 btn-outline btn-secondary hover:scale-105 hover:shadow-secondary/50"
+					href="#contact"
+				>
+					<Send class="h-4 w-4 transition-transform group-hover:translate-x-1" />
+					Contact Me
+				</a>
+			</div>
+		</header>
 
-	<!-- Footer -->
-	<footer class="mt-20 text-center text-sm text-neutral-content">
-		© {new Date().getFullYear()}
-		{name} · Built with Svelte + DaisyUI
-	</footer>
+		<!-- Stats with icons and animations -->
+		<div
+			class="mt-16 grid grid-cols-1 gap-4 md:grid-cols-4 {mounted
+				? 'animate-fade-in-delay'
+				: 'opacity-0'}"
+		>
+			{#each stats as s, i}
+				<div
+					class="card border border-base-300 bg-base-200/50 p-6 text-center shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:bg-base-200/70 hover:shadow-xl"
+					style="animation-delay: {i * 100}ms"
+				>
+					<div class="mb-2 flex justify-center">
+						{#if i === 0}
+							<Award class="h-8 w-8 text-primary" />
+						{:else if i === 1}
+							<Presentation class="h-8 w-8 text-accent" />
+						{:else if i === 2}
+							<Users class="h-8 w-8 text-secondary" />
+						{:else}
+							<Folder class="h-8 w-8 text-cyan-800" />
+						{/if}
+					</div>
+					<div class="text-sm text-base-content/70">{s.label}</div>
+					<div
+						class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-3xl font-bold text-transparent"
+					>
+						{s.value}
+					</div>
+				</div>
+			{/each}
+		</div>
+		<div class="w-full max-w-5xl">
+			<!-- Experience Section -->
+			<section class="mt-20 {mounted ? 'animate-fade-in-delay' : 'opacity-0'}">
+				<div class="mb-8 flex items-center gap-3">
+					<Briefcase class="h-6 w-6 text-primary" />
+					<h2 class="text-3xl font-bold">Experience</h2>
+				</div>
+
+				<div class="space-y-6">
+					{#each experiences as exp, i}
+						<div
+							class="group card border border-base-300 bg-base-200/50 p-6 shadow-lg backdrop-blur-sm transition-all duration-300 hover:translate-x-2 hover:border-primary/50 hover:shadow-xl"
+							style="animation-delay: {i * 150}ms"
+						>
+							<div class="mb-3 flex items-start justify-between">
+								<div>
+									<h3
+										class="group-hover:text-primary-focus text-xl font-bold text-primary transition-colors"
+									>
+										{exp.role}
+									</h3>
+									<p class="text-lg font-semibold">{exp.company}</p>
+								</div>
+								<ChevronRight
+									class="h-5 w-5 text-base-content/50 transition-transform group-hover:translate-x-1"
+								/>
+							</div>
+
+							<div class="mb-3 flex items-center gap-4 text-sm text-base-content/70">
+								<span class="flex items-center gap-1">
+									<Calendar class="h-4 w-4" />
+									{exp.years}
+								</span>
+								<span class="flex items-center gap-1">
+									<MapPin class="h-4 w-4" />
+									{exp.location}
+								</span>
+							</div>
+
+							<p class="mb-4 text-base-content/80">{exp.desc}</p>
+
+							<div class="flex flex-wrap gap-2">
+								{#each exp.stack as tech}
+									<span
+										class="badge badge-outline badge-sm transition-all badge-primary hover:scale-110 hover:badge-primary"
+									>
+										{tech}
+									</span>
+								{/each}
+							</div>
+						</div>
+					{/each}
+				</div>
+			</section>
+
+			<!-- Skills Section -->
+			<section class="mt-20 {mounted ? 'animate-fade-in-delay' : 'opacity-0'}">
+				<div class="mb-8 flex items-center gap-3">
+					<Code2 class="h-6 w-6 text-primary" />
+					<h2 class="text-3xl font-bold">Skills</h2>
+				</div>
+
+				<div class="flex flex-wrap gap-3">
+					{#each skills as skill, i}
+						<span
+							class="badge cursor-default badge-outline p-4 badge-lg transition-all duration-300 badge-primary hover:scale-110 hover:shadow-lg hover:badge-primary"
+							style="animation-delay: {i * 50}ms"
+						>
+							{skill}
+						</span>
+					{/each}
+				</div>
+			</section>
+
+			<!-- Projects Section -->
+			<section class="mt-20 {mounted ? 'animate-fade-in-delay' : 'opacity-0'}">
+				<div class="mb-8 flex items-center gap-3">
+					<Folder class="h-6 w-6 text-primary" />
+					<h2 class="text-3xl font-bold">Projects</h2>
+				</div>
+
+				<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+					{#each projects as proj, i}
+						<div
+							class="group card border border-base-300 bg-base-200/50 p-6 shadow-lg backdrop-blur-sm transition-all duration-300 hover:-translate-y-2 hover:border-primary/50 hover:shadow-xl"
+							style="animation-delay: {i * 100}ms"
+						>
+							<h3
+								class="group-hover:text-primary-focus mb-2 text-xl font-bold text-primary transition-colors"
+							>
+								{proj.name}
+							</h3>
+							<p class="mb-4 line-clamp-3 text-sm text-base-content/70">
+								{proj.desc}
+							</p>
+
+							<div class="mb-4 flex flex-wrap gap-2">
+								{#each proj.stack as tag}
+									<span class="badge badge-ghost badge-sm">
+										{tag}
+									</span>
+								{/each}
+							</div>
+
+							<a class="group/btn btn w-full btn-sm btn-primary" href={proj.link} target="_blank">
+								View Project
+								<ExternalLink
+									class="h-4 w-4 transition-transform group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1"
+								/>
+							</a>
+						</div>
+					{/each}
+				</div>
+			</section>
+		</div>
+		<!-- Contact Section -->
+		<section
+			id="contact"
+			class="mt-20 text-center {mounted ? 'animate-fade-in-delay' : 'opacity-0'}"
+		>
+			<h2 class="mb-4 text-3xl font-bold">Let's Connect</h2>
+			<p class="mb-8 text-base-content/70">
+				I'm always interested in hearing about new projects and opportunities.
+			</p>
+
+			<div class="flex justify-center gap-4">
+				{#each socials as s}
+					{@const Icon = socialIcons[s.name] || ExternalLink}
+					<a
+						class="btn btn-circle transition-all duration-300 btn-outline btn-lg hover:scale-110 hover:shadow-lg hover:shadow-primary/50"
+						href={s.url}
+						target="_blank"
+						aria-label={s.name}
+					>
+						<Icon class="h-6 w-6" />
+					</a>
+				{/each}
+			</div>
+
+			<div
+				class="mt-8 inline-flex items-center gap-2 rounded-full bg-success/20 px-4 py-2 text-sm text-success"
+			>
+				<span class="relative flex h-3 w-3">
+					<span
+						class="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-75"
+					></span>
+					<span class="relative inline-flex h-3 w-3 rounded-full bg-success"></span>
+				</span>
+				Available for hire
+			</div>
+		</section>
+
+		<!-- Footer -->
+		<footer class="mt-24 text-center text-sm text-base-content/50">
+			© {new Date().getFullYear()}
+			{name} · Built with
+			<span class="text-primary">Svelte</span> +
+			<span class="text-secondary">DaisyUI</span>
+		</footer>
+	</div>
 </div>
+
+<style>
+	@keyframes fade-in {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
+
+	@keyframes slide-up {
+		from {
+			transform: translateY(20px);
+			opacity: 0;
+		}
+		to {
+			transform: translateY(0);
+			opacity: 1;
+		}
+	}
+
+	@keyframes bounce-in {
+		0% {
+			transform: scale(0);
+			opacity: 0;
+		}
+		50% {
+			transform: scale(1.1);
+		}
+		100% {
+			transform: scale(1);
+			opacity: 1;
+		}
+	}
+
+	.animate-fade-in {
+		animation: fade-in 0.6s ease-out forwards;
+	}
+
+	.animate-fade-in-delay {
+		animation: fade-in 0.6s ease-out 0.3s forwards;
+		opacity: 0;
+	}
+
+	.animate-slide-up {
+		animation: slide-up 0.6s ease-out forwards;
+	}
+
+	.animate-slide-up-delay-1 {
+		animation: slide-up 0.6s ease-out 0.1s forwards;
+	}
+
+	.animate-slide-up-delay-2 {
+		animation: slide-up 0.6s ease-out 0.2s forwards;
+	}
+
+	.animate-slide-up-delay-3 {
+		animation: slide-up 0.6s ease-out 0.3s forwards;
+	}
+
+	.animate-bounce-in {
+		animation: bounce-in 0.6s ease-out forwards;
+	}
+
+	.line-clamp-3 {
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+</style>
