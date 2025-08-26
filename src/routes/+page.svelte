@@ -47,10 +47,10 @@
 
 <div class="relative min-h-screen overflow-hidden bg-base-100">
 	<!-- Animated Background -->
-	<div class="fixed inset-0 -z-10">
+	<div class="fixed inset-0">
 		<!-- Parallax blur effects -->
 		<div
-			class="absolute -top-[400px] left-1/2 h-[1000px] w-[1000px] -translate-x-1/2 rounded-full bg-gradient-to-r from-primary/30 to-secondary/30 blur-3xl transition-transform duration-1000"
+			class="absolute -top-[400px] left-1/4 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-gradient-to-r from-primary/20 to-secondary/20 blur-3xl transition-transform duration-1000"
 			style="transform: translateY({scrollY * 0.5}px) translateX(-50%)"
 		></div>
 		<div
@@ -63,10 +63,10 @@
 		></div>
 
 		<!-- Grid pattern overlay -->
-		<div class="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-5"></div>
+		<div class="bg-grid absolute inset-0 bg-center opacity-25"></div>
 	</div>
 
-	<div class="relative flex flex-col items-center px-6 py-12 text-base-content">
+	<div class="relative z-1 flex flex-col items-center px-6 py-12 text-base-content">
 		<!-- Hero Section -->
 		<header class="w-full space-y-4 text-center {mounted ? 'animate-fade-in' : 'opacity-0'}">
 			<!-- Avatar with animation -->
@@ -316,7 +316,8 @@
 			© {new Date().getFullYear()}
 			{name} · Built with
 			<span class="text-primary">Svelte</span> +
-			<span class="text-secondary">DaisyUI</span>
+			<span class="text-secondary">DaisyUI</span>+
+			<span class="text-accent">TailwindCSS</span>
 		</footer>
 	</div>
 </div>
@@ -390,5 +391,23 @@
 		-webkit-line-clamp: 3;
 		-webkit-box-orient: vertical;
 		overflow: hidden;
+	}
+
+	.bg-grid {
+		background-image:
+			repeating-linear-gradient(45deg, var(--color-primary) 0px 1px, transparent 1px 10px),
+			linear-gradient(to right, var(--color-primary) 1px, transparent 1px),
+			linear-gradient(var(--color-primary) 1px, transparent 1px);
+		background-size: 40px 40px;
+		animation: gridmove 30s linear infinite;
+	}
+
+	@keyframes gridmove {
+		from {
+			background-position: 0 0;
+		}
+		to {
+			background-position: 40px 40px;
+		}
 	}
 </style>
