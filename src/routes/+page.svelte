@@ -74,7 +74,10 @@
 				<div
 					class="relative w-36 rounded-full shadow-2xl ring-4 ring-primary ring-offset-4 ring-offset-base-100 transition-all duration-300 hover:ring-offset-8"
 				>
-					<img src="/Abdulsalam_Ghaleb_DSC_03630.jpg" alt="Profile of {name}" />
+					<img
+						src="https://t60kv6b4px.ufs.sh/f/sozfFBo5NxiRkBzx6kR0LdWIUbkm56jvZqgYPMuJiBN2FolC"
+						alt="Profile of {name}"
+					/>
 				</div>
 			</div>
 
@@ -112,7 +115,7 @@
 			>
 				<a
 					class="group btn shadow-lg transition-all duration-300 btn-primary hover:scale-105 hover:shadow-primary/50"
-					href="/Abdulsalam_Ghaleb_full_stack 2025-8.pdf"
+					href="https://t60kv6b4px.ufs.sh/f/sozfFBo5NxiRvk7V046E8BWfv0TkHtOnmY5Abyg61asRUZDl"
 					download
 				>
 					<Download class="h-4 w-4 transition-transform group-hover:translate-y-1" />
