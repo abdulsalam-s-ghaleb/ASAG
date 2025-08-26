@@ -1,11 +1,10 @@
+// wrangler.jsonc
 {
 	"name": "asag",
-	"main": "./.cloudflare/worker.js",
-	"site": {
-		"bucket": "./.cloudflare/public"
-	},
-	"build": {
-		"command": "bun run build"
-	},
-	"compatibility_date": "2025-08-25"
+	// "main": ".svelte-kit/cloudflare/_worker.js",
+	"compatibility_date": "2025-08-25",
+	"assets": {
+		"binding": "ASSETS",
+		"directory": ".svelte-kit/cloudflare"
+	}
 }

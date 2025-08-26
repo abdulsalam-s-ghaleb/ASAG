@@ -17,7 +17,7 @@
 		"@eslint/compat": "^1.2.5",
 		"@eslint/js": "^9.18.0",
 		"@lucide/svelte": "^0.541.0",
-		"@sveltejs/adapter-cloudflare-workers": "^2.9.0",
+		"@sveltejs/adapter-cloudflare": "^7.2.3",
 		"@sveltejs/kit": "^2.22.0",
 		"@sveltejs/vite-plugin-svelte": "^6.0.0",
 		"@tailwindcss/vite": "^4.0.0",
@@ -37,5 +37,7 @@
 		"vite": "^7.0.4",
 		"wrangler": "^4.32.0"
 	},
-	"dependencies": {}
+	"dependencies": {
+		"@cloudflare/workers-types": "^4.20250826.0"
+	}
 }
