@@ -1,0 +1,10 @@
+// wrangler.jsonc
+{
+	"name": "asag",
+	"main": ".svelte-kit/cloudflare/_worker.js",
+	"compatibility_date": "2025-01-01",
+	"assets": {
+		"directory": ".cloudflare/public",
+		"binding": "ASSETS" // Exclude this if you don't have a `main` key configured.
+	}
+}
