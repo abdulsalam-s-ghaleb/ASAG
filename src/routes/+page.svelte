@@ -116,7 +116,7 @@
 				<a
 					class="group btn shadow-lg transition-all duration-300 btn-primary hover:scale-105 hover:shadow-primary/50"
 					href="https://t60kv6b4px.ufs.sh/f/sozfFBo5NxiRvk7V046E8BWfv0TkHtOnmY5Abyg61asRUZDl"
-					download
+					target="_blank"
 				>
 					<Download class="h-4 w-4 transition-transform group-hover:translate-y-1" />
 					Download CV
