@@ -1,5 +1,8 @@
 // wrangler.jsonc
 {
 	"name": "asag",
-	"compatibility_date": "2025-08-25"
+	"compatibility_date": "2025-08-25",
+	"assets": {
+		"directory": ".svelte-kit/cloudflare"
+	}
 }
