@@ -112,7 +112,7 @@
 			>
 				<a
 					class="group btn shadow-lg transition-all duration-300 btn-primary hover:scale-105 hover:shadow-primary/50"
-					href="/cv.pdf"
+					href="/Abdulsalam_Ghaleb_full_stack 2025-8.pdf"
 					download
 				>
 					<Download class="h-4 w-4 transition-transform group-hover:translate-y-1" />
