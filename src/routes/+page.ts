@@ -21,6 +21,11 @@ export const load: PageLoad = () => {
 				name: 'LinkedIn',
 				url: 'https://linkedin.com/in/salam-ghaleb',
 				class: 'btn-accent'
+			},
+			{
+				name: 'Freelance',
+				url: 'https://koprey.kayat.site/',
+				class: 'btn-success'
 			}
 		],
 
@@ -78,13 +83,13 @@ export const load: PageLoad = () => {
 				name: 'Recipify',
 				desc: 'A full-stack recipe management platform with SSR, advanced search, and user-generated content.',
 				stack: ['Vue.js', 'Nuxt.js', 'Appwrite', 'Tailwind CSS'],
-				link: 'https://recipify.online'
+				link: 'https://recipify.pages.dev/'
 			},
 			{
 				name: 'GPTMana',
 				desc: 'A cross-platform AI-powered chat assistant for Android, iOS, and the Web.',
 				stack: ['Flutter', 'Dart', 'Provider', 'GetX', 'REST APIs'],
-				link: 'https://media.licdn.com/dms/image/v2/D562DAQHDMcOqD4WC1g/profile-treasury-image-shrink_800_800/profile-treasury-image-shrink_800_800/0/1686141821300?e=1756605600&v=beta&t=5oMr6JfQIs4-srtyHl85YcLjoT_2hzc6j2BmGtVZcRA'
+				link: '/static/GPTMana.png'
 			},
 			{
 				name: 'AI E-Commerce System',
