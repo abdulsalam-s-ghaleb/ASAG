@@ -38,6 +38,14 @@ export const load: PageLoad = () => {
 
 		experiences: [
 			{
+				role: 'Full Stack Engineer',
+				company: 'Koprey',
+				years: '01/2025 - Present',
+				location: 'Jeddah, Saudi Arabia',
+				desc: 'Developed and maintained a full-stack web platform, focusing on responsive user experiences and core application functionality. Designed and developed responsive web interfaces using modern web technologies. Implemented frontend functionality and interactive user experiences. Developed and integrated backend functionality and APIs. Managed databases and server-side services to manage application data. Optimized website performance, responsiveness, and usability. Troubleshooted and resolved technical issues throughout development and deployment. Independently managed website development, testing, and deployment.',
+				stack: ['SvelteKit', 'Next.js', 'Appwrite', 'NoSQL', 'SQL', 'REST APIs', 'CI/CD']
+			},
+			{
 				role: 'Full Stack Developer',
 				company: 'Othouba Line',
 				years: '03/2024 - 03/2025',
@@ -76,7 +84,6 @@ export const load: PageLoad = () => {
 			'Docker',
 			'Git',
 			'Agile Methodologies'
-			
 		],
 
 		projects: [
@@ -90,7 +97,7 @@ export const load: PageLoad = () => {
 				name: 'GPTMana',
 				desc: 'A cross-platform AI-powered chat assistant for Android, iOS, and the Web.',
 				stack: ['Flutter', 'Dart', 'Provider', 'GetX', 'REST APIs'],
-				link: '/static/GPTMana.png'
+				link: '/GPTMana.png'
 			},
 			{
 				name: 'AI E-Commerce System',
