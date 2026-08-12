@@ -76,6 +76,7 @@ export const load: PageLoad = () => {
 			'Docker',
 			'Git',
 			'Agile Methodologies'
+			
 		],
 
 		projects: [
