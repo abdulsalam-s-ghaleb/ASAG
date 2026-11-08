@@ -7,48 +7,159 @@
 		Calendar,
 		Briefcase,
 		Code2,
-		Sparkles,
 		Github,
 		Linkedin,
-		Twitter,
 		ExternalLink,
 		ChevronRight,
 		Award,
-		Users,
 		Folder,
 		Send,
-		Presentation
+		Presentation,
+		GraduationCap,
+		BadgeCheck,
+		Trophy,
+		Globe,
+		Phone,
+		Terminal,
+		Layers,
+		Cpu,
+		Smartphone,
+		Database,
+		Plug,
+		Wrench,
+		Brain,
+		Cog,
+		Sparkles
 	} from '@lucide/svelte/icons';
-	import { onMount } from 'svelte';
+	import { onMount, type Component } from 'svelte';
 
 	export let data: PageData;
-	const { name, title, about, stats, experiences, skills, projects, socials } = data;
+	const {
+		name,
+		title,
+		focus,
+		about,
+		highlights,
+		location,
+		email,
+		phone,
+		stats,
+		experiences,
+		skillGroups,
+		projects,
+		education,
+		certifications,
+		languages,
+		socials
+	} = data;
 
 	let scrollY = 0;
 	let mounted = false;
+	let docHeight = 0;
+	let progress = 0;
+
+	$: progress = docHeight > 0 ? Math.min(100, Math.max(0, (scrollY / docHeight) * 100)) : 0;
 
 	onMount(() => {
 		mounted = true;
-		const handleScroll = () => (scrollY = window.scrollY);
-		window.addEventListener('scroll', handleScroll);
-		return () => window.removeEventListener('scroll', handleScroll);
+		const measure = () => {
+			docHeight = document.documentElement.scrollHeight - window.innerHeight;
+		};
+		measure();
+		window.addEventListener('resize', measure);
+		const timer = setTimeout(measure, 600);
+		return () => {
+			window.removeEventListener('resize', measure);
+			clearTimeout(timer);
+		};
 	});
 
-	// Icon mapping for socials
-	const socialIcons: Record<string, any> = {
+	const socialIcons: Record<string, Component> = {
 		GitHub: Github,
 		LinkedIn: Linkedin,
-		Twitter: Twitter,
-		Email: Mail
+		Email: Mail,
+		Website: Globe,
+		Freelance: Briefcase
 	};
+
+	const skillIcons: Record<string, Component> = {
+		Languages: Terminal,
+		Frontend: Layers,
+		Backend: Cpu,
+		Mobile: Smartphone,
+		Databases: Database,
+		'APIs & Integrations': Plug,
+		'Tools & Platforms': Wrench,
+		'AI & Automation': Brain,
+		Practices: Cog
+	};
+
+	const statIcons: Component[] = [Award, Presentation, BadgeCheck, Trophy];
+
+	const navLinks = [
+		{ label: 'Experience', href: '#experience' },
+		{ label: 'Skills', href: '#skills' },
+		{ label: 'Projects', href: '#projects' },
+		{ label: 'Education', href: '#education' },
+		{ label: 'Contact', href: '#contact' }
+	];
 </script>
 
 <svelte:window bind:scrollY />
 
-<div class="relative min-h-screen overflow-hidden bg-base-100">
+<svelte:head>
+	<title>{name} — {title}</title>
+	<meta
+		name="description"
+		content="Portfolio of {name}, a Full Stack Software Engineer based in {location}, specializing in web and mobile development, TypeScript, Node.js, React, Flutter, and AI-powered applications."
+	/>
+	<meta name="author" content={name} />
+	<meta property="og:title" content="{name} — {title}" />
+	<meta
+		property="og:description"
+		content="Full Stack Software Engineer building web and mobile applications, from REST APIs and databases to AI-powered features."
+	/>
+	<meta property="og:type" content="website" />
+</svelte:head>
+
+<!-- Sticky Navigation -->
+<nav
+	class="fixed inset-x-0 top-0 z-50 transition-all duration-300 {scrollY > 80
+		? 'border-b border-base-300 bg-base-100/80 py-2 backdrop-blur-lg'
+		: 'py-4'}"
+>
+	<div class="mx-auto flex max-w-5xl items-center justify-between px-6">
+		<a href="#top" class="text-sm font-bold tracking-tight transition-colors hover:text-primary">
+			{name}
+		</a>
+		<div class="hidden items-center gap-1 md:flex">
+			{#each navLinks as link (link.href)}
+				<a
+					href={link.href}
+					class="rounded-full px-3 py-1.5 text-sm text-base-content/70 transition-colors hover:bg-base-200 hover:text-primary"
+				>
+					{link.label}
+				</a>
+			{/each}
+		</div>
+		<a
+			href="/Abdulsalam_Ghaleb_ATS_Resume_2026-11.pdf"
+			target="_blank"
+			class="btn gap-1.5 btn-xs btn-primary"
+		>
+			<Download class="h-3.5 w-3.5" />
+			CV
+		</a>
+	</div>
+	<div
+		class="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-primary to-secondary"
+		style="width: {progress}%"
+	></div>
+</nav>
+
+<div id="top" class="relative min-h-screen overflow-hidden bg-base-100">
 	<!-- Animated Background -->
 	<div class="fixed inset-0">
-		<!-- Parallax blur effects -->
 		<div
 			class="absolute -top-[400px] left-1/4 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-gradient-to-r from-primary/20 to-secondary/20 blur-3xl transition-transform duration-1000"
 			style="transform: translateY({scrollY * 0.5}px) translateX(-50%)"
@@ -62,14 +173,12 @@
 			style="transform: translateY({-scrollY * 0.2}px)"
 		></div>
 
-		<!-- Grid pattern overlay -->
 		<div class="bg-grid absolute inset-0 bg-center opacity-25"></div>
 	</div>
 
-	<div class="relative z-1 flex flex-col items-center px-6 py-12 text-base-content">
+	<div class="relative z-1 flex flex-col items-center px-6 pt-24 pb-12 text-base-content">
 		<!-- Hero Section -->
 		<header class="w-full space-y-4 text-center {mounted ? 'animate-fade-in' : 'opacity-0'}">
-			<!-- Avatar with animation -->
 			<div class="avatar mb-6 {mounted ? 'animate-bounce-in' : 'scale-0'}">
 				<div
 					class="relative w-36 rounded-full shadow-2xl ring-4 ring-primary ring-offset-4 ring-offset-base-100 transition-all duration-300 hover:ring-offset-8"
@@ -81,8 +190,7 @@
 				</div>
 			</div>
 
-			<!-- Name + Title with stagger animation -->
-			<div class="space-y-2">
+			<div class="space-y-3">
 				<h1
 					class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-5xl font-bold text-transparent {mounted
 						? 'animate-slide-up'
@@ -99,6 +207,13 @@
 					{title}
 				</p>
 				<p
+					class="text-sm font-medium tracking-wide text-accent uppercase {mounted
+						? 'animate-slide-up-delay-1'
+						: 'translate-y-10 opacity-0'}"
+				>
+					{focus}
+				</p>
+				<p
 					class="mx-auto max-w-2xl text-base-content/80 {mounted
 						? 'animate-slide-up-delay-2'
 						: 'translate-y-10 opacity-0'}"
@@ -107,7 +222,46 @@
 				</p>
 			</div>
 
-			<!-- CTA buttons with hover effects -->
+			<!-- Focus tags -->
+			<div
+				class="flex flex-wrap justify-center gap-2 {mounted
+					? 'animate-slide-up-delay-2'
+					: 'translate-y-10 opacity-0'}"
+			>
+				{#each highlights as tag (tag)}
+					<span class="badge gap-1 badge-ghost badge-sm text-base-content/70">
+						<Sparkles class="h-3 w-3 text-accent" />
+						{tag}
+					</span>
+				{/each}
+			</div>
+
+			<!-- Meta -->
+			<div
+				class="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm text-base-content/60 {mounted
+					? 'animate-slide-up-delay-2'
+					: 'translate-y-10 opacity-0'}"
+			>
+				<span class="flex items-center gap-1.5">
+					<MapPin class="h-4 w-4" />
+					{location}
+				</span>
+				<a
+					class="flex items-center gap-1.5 transition-colors hover:text-primary"
+					href="tel:{phone}"
+				>
+					<Phone class="h-4 w-4" />
+					{phone}
+				</a>
+				<a
+					class="flex items-center gap-1.5 transition-colors hover:text-primary"
+					href="mailto:{email}"
+				>
+					<Mail class="h-4 w-4" />
+					{email}
+				</a>
+			</div>
+
 			<div
 				class="mt-6 flex flex-wrap justify-center gap-4 {mounted
 					? 'animate-slide-up-delay-3'
@@ -115,7 +269,7 @@
 			>
 				<a
 					class="group btn shadow-lg transition-all duration-300 btn-primary hover:scale-105 hover:shadow-primary/50"
-					href="https://t60kv6b4px.ufs.sh/f/sozfFBo5NxiRvk7V046E8BWfv0TkHtOnmY5Abyg61asRUZDl"
+					href="/Abdulsalam_Ghaleb_ATS_Resume_2026-11.pdf"
 					target="_blank"
 				>
 					<Download class="h-4 w-4 transition-transform group-hover:translate-y-1" />
@@ -131,27 +285,20 @@
 			</div>
 		</header>
 
-		<!-- Stats with icons and animations -->
+		<!-- Stats -->
 		<div
-			class="mt-16 grid grid-cols-1 gap-4 md:grid-cols-4 {mounted
+			class="mt-16 grid w-full max-w-5xl grid-cols-2 gap-4 md:grid-cols-4 {mounted
 				? 'animate-fade-in-delay'
 				: 'opacity-0'}"
 		>
-			{#each stats as s, i}
+			{#each stats as s, i (s.label)}
+				{@const StatIcon = statIcons[i] ?? Award}
 				<div
 					class="card border border-base-300 bg-base-200/50 p-6 text-center shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:bg-base-200/70 hover:shadow-xl"
 					style="animation-delay: {i * 100}ms"
 				>
 					<div class="mb-2 flex justify-center">
-						{#if i === 0}
-							<Award class="h-8 w-8 text-primary" />
-						{:else if i === 1}
-							<Presentation class="h-8 w-8 text-accent" />
-						{:else if i === 2}
-							<Users class="h-8 w-8 text-secondary" />
-						{:else}
-							<Folder class="h-8 w-8 text-cyan-800" />
-						{/if}
+						<StatIcon class="h-8 w-8 text-primary" />
 					</div>
 					<div class="text-sm text-base-content/70">{s.label}</div>
 					<div
@@ -162,35 +309,46 @@
 				</div>
 			{/each}
 		</div>
+
 		<div class="w-full max-w-5xl">
 			<!-- Experience Section -->
-			<section class="mt-20 {mounted ? 'animate-fade-in-delay' : 'opacity-0'}">
+			<section
+				id="experience"
+				class="mt-20 scroll-mt-24 {mounted ? 'animate-fade-in-delay' : 'opacity-0'}"
+			>
 				<div class="mb-8 flex items-center gap-3">
 					<Briefcase class="h-6 w-6 text-primary" />
 					<h2 class="text-3xl font-bold">Experience</h2>
 				</div>
 
 				<div class="space-y-6">
-					{#each experiences as exp, i}
+					{#each experiences as exp, i (exp.company)}
 						<div
 							class="group card border border-base-300 bg-base-200/50 p-6 shadow-lg backdrop-blur-sm transition-all duration-300 hover:translate-x-2 hover:border-primary/50 hover:shadow-xl"
 							style="animation-delay: {i * 150}ms"
 						>
-							<div class="mb-3 flex items-start justify-between">
+							<div class="mb-3 flex items-start justify-between gap-4">
 								<div>
-									<h3
-										class="group-hover:text-primary-focus text-xl font-bold text-primary transition-colors"
-									>
-										{exp.role}
-									</h3>
+									<div class="flex flex-wrap items-center gap-2">
+										<h3
+											class="group-hover:text-primary-focus text-xl font-bold text-primary transition-colors"
+										>
+											{exp.role}
+										</h3>
+										{#if exp.note}
+											<span class="badge badge-outline badge-sm text-base-content/60">
+												{exp.note}
+											</span>
+										{/if}
+									</div>
 									<p class="text-lg font-semibold">{exp.company}</p>
 								</div>
 								<ChevronRight
-									class="h-5 w-5 text-base-content/50 transition-transform group-hover:translate-x-1"
+									class="mt-1 h-5 w-5 shrink-0 text-base-content/50 transition-transform group-hover:translate-x-1"
 								/>
 							</div>
 
-							<div class="mb-3 flex items-center gap-4 text-sm text-base-content/70">
+							<div class="mb-3 flex flex-wrap items-center gap-4 text-sm text-base-content/70">
 								<span class="flex items-center gap-1">
 									<Calendar class="h-4 w-4" />
 									{exp.years}
@@ -201,10 +359,17 @@
 								</span>
 							</div>
 
-							<p class="mb-4 text-base-content/80">{exp.desc}</p>
+							<ul class="mb-4 space-y-2">
+								{#each exp.highlights as point (point)}
+									<li class="flex gap-2 text-sm leading-relaxed text-base-content/80">
+										<ChevronRight class="mt-0.5 h-4 w-4 shrink-0 text-primary/70" />
+										<span>{point}</span>
+									</li>
+								{/each}
+							</ul>
 
 							<div class="flex flex-wrap gap-2">
-								{#each exp.stack as tech}
+								{#each exp.stack as tech (tech)}
 									<span
 										class="badge badge-outline badge-sm transition-all badge-primary hover:scale-110 hover:badge-primary"
 									>
@@ -218,35 +383,50 @@
 			</section>
 
 			<!-- Skills Section -->
-			<section class="mt-20 {mounted ? 'animate-fade-in-delay' : 'opacity-0'}">
+			<section
+				id="skills"
+				class="mt-20 scroll-mt-24 {mounted ? 'animate-fade-in-delay' : 'opacity-0'}"
+			>
 				<div class="mb-8 flex items-center gap-3">
 					<Code2 class="h-6 w-6 text-primary" />
-					<h2 class="text-3xl font-bold">Skills</h2>
+					<h2 class="text-3xl font-bold">Technical Skills</h2>
 				</div>
 
-				<div class="flex flex-wrap gap-3">
-					{#each skills as skill, i}
-						<span
-							class="badge cursor-default badge-outline p-4 badge-lg transition-all duration-300 badge-primary hover:scale-110 hover:shadow-lg hover:badge-primary"
-							style="animation-delay: {i * 50}ms"
+				<div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+					{#each skillGroups as group, i (group.title)}
+						{@const Icon = skillIcons[group.title] ?? Code2}
+						<div
+							class="card border border-base-300 bg-base-200/50 p-5 shadow-lg backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl"
+							style="animation-delay: {i * 60}ms"
 						>
-							{skill}
-						</span>
+							<div class="mb-3 flex items-center gap-2">
+								<Icon class="h-4 w-4 text-accent" />
+								<h3 class="text-sm font-bold tracking-wide uppercase">{group.title}</h3>
+							</div>
+							<div class="flex flex-wrap gap-1.5">
+								{#each group.items as item (item)}
+									<span class="badge badge-outline badge-sm text-base-content/75">{item}</span>
+								{/each}
+							</div>
+						</div>
 					{/each}
 				</div>
 			</section>
 
 			<!-- Projects Section -->
-			<section class="mt-20 {mounted ? 'animate-fade-in-delay' : 'opacity-0'}">
+			<section
+				id="projects"
+				class="mt-20 scroll-mt-24 {mounted ? 'animate-fade-in-delay' : 'opacity-0'}"
+			>
 				<div class="mb-8 flex items-center gap-3">
 					<Folder class="h-6 w-6 text-primary" />
 					<h2 class="text-3xl font-bold">Projects</h2>
 				</div>
 
-				<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-					{#each projects as proj, i}
+				<div class="grid gap-6 md:grid-cols-2">
+					{#each projects as proj, i (proj.name)}
 						<div
-							class="group card border border-base-300 bg-base-200/50 p-6 shadow-lg backdrop-blur-sm transition-all duration-300 hover:-translate-y-2 hover:border-primary/50 hover:shadow-xl"
+							class="group card flex flex-col border border-base-300 bg-base-200/50 p-6 shadow-lg backdrop-blur-sm transition-all duration-300 hover:-translate-y-2 hover:border-primary/50 hover:shadow-xl"
 							style="animation-delay: {i * 100}ms"
 						>
 							<h3
@@ -254,15 +434,13 @@
 							>
 								{proj.name}
 							</h3>
-							<p class="mb-4 line-clamp-3 text-sm text-base-content/70">
+							<p class="mb-4 flex-1 text-sm text-base-content/70">
 								{proj.desc}
 							</p>
 
 							<div class="mb-4 flex flex-wrap gap-2">
-								{#each proj.stack as tag}
-									<span class="badge badge-ghost badge-sm">
-										{tag}
-									</span>
+								{#each proj.stack as tag (tag)}
+									<span class="badge badge-ghost badge-sm">{tag}</span>
 								{/each}
 							</div>
 
@@ -276,11 +454,113 @@
 					{/each}
 				</div>
 			</section>
+
+			<!-- Education & Credentials -->
+			<section
+				id="education"
+				class="mt-20 scroll-mt-24 {mounted ? 'animate-fade-in-delay' : 'opacity-0'}"
+			>
+				<div class="mb-8 flex items-center gap-3">
+					<GraduationCap class="h-6 w-6 text-primary" />
+					<h2 class="text-3xl font-bold">Education & Credentials</h2>
+				</div>
+
+				<div class="grid gap-6 lg:grid-cols-3">
+					<!-- Education -->
+					<div
+						class="card border border-base-300 bg-base-200/50 p-6 shadow-lg backdrop-blur-sm transition-all duration-300 hover:border-primary/40 hover:shadow-xl lg:col-span-2"
+					>
+						<div class="flex items-start gap-4">
+							<div class="shrink-0 rounded-full bg-primary/10 p-3">
+								<GraduationCap class="h-6 w-6 text-primary" />
+							</div>
+							<div>
+								<h3 class="text-xl font-bold">{education.degree}</h3>
+								<p class="text-base-content/80">{education.school}</p>
+								<p class="mt-1 flex items-center gap-1 text-sm text-base-content/60">
+									<Calendar class="h-4 w-4" />
+									{education.years}
+								</p>
+							</div>
+						</div>
+
+						<div class="divider my-4"></div>
+
+						<p class="mb-3 flex items-center gap-2 font-semibold text-primary">
+							<BadgeCheck class="h-5 w-5" />
+							{education.honors}
+						</p>
+
+						<ul class="space-y-2">
+							{#each education.awards as award (award)}
+								<li class="flex items-center gap-2 text-sm text-base-content/75">
+									<Trophy class="h-4 w-4 text-warning" />
+									{award}
+								</li>
+							{/each}
+						</ul>
+					</div>
+
+					<!-- Languages -->
+					<div
+						class="card border border-base-300 bg-base-200/50 p-6 shadow-lg backdrop-blur-sm transition-all duration-300 hover:border-primary/40 hover:shadow-xl"
+					>
+						<div class="mb-4 flex items-center gap-2">
+							<Globe class="h-5 w-5 text-accent" />
+							<h3 class="text-sm font-bold tracking-wide uppercase">Languages</h3>
+						</div>
+
+						<div class="space-y-4">
+							{#each languages as lang (lang.name)}
+								<div>
+									<div class="flex items-baseline justify-between gap-2">
+										<span class="font-semibold">{lang.name}</span>
+										<span class="text-xs text-base-content/60">{lang.level}</span>
+									</div>
+									{#if lang.note}
+										<p class="mt-1 text-xs text-accent">{lang.note}</p>
+									{/if}
+								</div>
+							{/each}
+						</div>
+					</div>
+				</div>
+
+				<!-- Certifications -->
+				<div class="mt-6">
+					<div class="mb-4 flex items-center gap-2">
+						<BadgeCheck class="h-5 w-5 text-accent" />
+						<h3 class="text-sm font-bold tracking-wide uppercase">Certifications</h3>
+					</div>
+
+					<div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+						{#each certifications as cert, i (cert.name)}
+							<div
+								class="card border border-base-300 bg-base-200/50 p-5 shadow-lg backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:shadow-xl"
+								style="animation-delay: {i * 60}ms"
+							>
+								<div class="flex items-start gap-3">
+									<BadgeCheck class="mt-0.5 h-4 w-4 shrink-0 text-accent" />
+									<div>
+										<p class="text-sm leading-snug font-semibold">{cert.name}</p>
+										{#if cert.issuer || cert.year}
+											<p class="mt-1 text-xs text-base-content/60">
+												{[cert.issuer, cert.year].filter(Boolean).join(' · ')}
+											</p>
+										{/if}
+									</div>
+								</div>
+							</div>
+						{/each}
+					</div>
+				</div>
+			</section>
 		</div>
+
 		<!-- Contact Section -->
 		<section
 			id="contact"
-			class="mt-20 text-center {mounted ? 'animate-fade-in-delay' : 'opacity-0'}"
+			class="mt-20 scroll-mt-24 text-center {mounted ? 'animate-fade-in-delay' : 'opacity-0'}"
 		>
 			<h2 class="mb-4 text-3xl font-bold">Let's Connect</h2>
 			<p class="mb-8 text-base-content/70">
@@ -288,7 +568,7 @@
 			</p>
 
 			<div class="flex justify-center gap-4">
-				{#each socials as s}
+				{#each socials as s (s.name)}
 					{@const Icon = socialIcons[s.name] || ExternalLink}
 					<a
 						class="btn btn-circle transition-all duration-300 btn-outline btn-lg hover:scale-110 hover:shadow-lg hover:shadow-primary/50"
@@ -299,6 +579,29 @@
 						<Icon class="h-6 w-6" />
 					</a>
 				{/each}
+			</div>
+
+			<div
+				class="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-base-content/60"
+			>
+				<a
+					class="flex items-center gap-1.5 transition-colors hover:text-primary"
+					href="mailto:{email}"
+				>
+					<Mail class="h-4 w-4" />
+					{email}
+				</a>
+				<a
+					class="flex items-center gap-1.5 transition-colors hover:text-primary"
+					href="tel:{phone}"
+				>
+					<Phone class="h-4 w-4" />
+					{phone}
+				</a>
+				<span class="flex items-center gap-1.5">
+					<MapPin class="h-4 w-4" />
+					{location}
+				</span>
 			</div>
 
 			<div
@@ -319,7 +622,7 @@
 			© {new Date().getFullYear()}
 			{name} · Built with
 			<span class="text-primary">Svelte</span> +
-			<span class="text-secondary">DaisyUI</span>+
+			<span class="text-secondary">DaisyUI</span> +
 			<span class="text-accent">TailwindCSS</span>
 		</footer>
 	</div>
@@ -387,14 +690,6 @@
 
 	.animate-bounce-in {
 		animation: bounce-in 0.6s ease-out forwards;
-	}
-
-	.line-clamp-3 {
-		display: -webkit-box;
-		-webkit-line-clamp: 3;
-		line-clamp: 3;
-		-webkit-box-orient: vertical;
-		overflow: hidden;
 	}
 
 	.bg-grid {
