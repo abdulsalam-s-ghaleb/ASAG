@@ -25,10 +25,12 @@
 		Cpu,
 		Smartphone,
 		Database,
-		Plug,
-		Wrench,
 		Brain,
 		Cog,
+		Cloud,
+		TrendingUp,
+		Lock,
+		History,
 		Sparkles
 	} from '@lucide/svelte/icons';
 	import { onMount, type Component } from 'svelte';
@@ -45,6 +47,7 @@
 		phone,
 		stats,
 		experiences,
+		earlier,
 		skillGroups,
 		projects,
 		education,
@@ -88,13 +91,16 @@
 		Backend: Cpu,
 		Mobile: Smartphone,
 		Databases: Database,
-		'APIs & Integrations': Plug,
-		'Tools & Platforms': Wrench,
-		'AI & Automation': Brain,
+		'Cloud & DevOps': Cloud,
+		'Analytics & Growth': TrendingUp,
+		'AI & Data': Brain,
 		Practices: Cog
 	};
 
 	const statIcons: Component[] = [Award, Presentation, BadgeCheck, Trophy];
+
+	const featuredProject = projects.find((p) => p.featured);
+	const gridProjects = projects.filter((p) => !p.featured);
 
 	const navLinks = [
 		{ label: 'Experience', href: '#experience' },
@@ -143,7 +149,7 @@
 			{/each}
 		</div>
 		<a
-			href="/Abdulsalam_Ghaleb_ATS_Resume_2026-11.pdf"
+			href="/Abdulsalam Ghaleb - ATS CV 2026-11.pdf"
 			target="_blank"
 			class="btn gap-1.5 btn-xs btn-primary"
 		>
@@ -214,7 +220,7 @@
 					{focus}
 				</p>
 				<p
-					class="mx-auto max-w-2xl text-base-content/80 {mounted
+					class="mx-auto max-w-3xl text-base-content/80 {mounted
 						? 'animate-slide-up-delay-2'
 						: 'translate-y-10 opacity-0'}"
 				>
@@ -269,7 +275,7 @@
 			>
 				<a
 					class="group btn shadow-lg transition-all duration-300 btn-primary hover:scale-105 hover:shadow-primary/50"
-					href="/Abdulsalam_Ghaleb_ATS_Resume_2026-11.pdf"
+					href="/Abdulsalam Ghaleb - ATS CV 2026-11.pdf"
 					target="_blank"
 				>
 					<Download class="h-4 w-4 transition-transform group-hover:translate-y-1" />
@@ -380,6 +386,27 @@
 						</div>
 					{/each}
 				</div>
+
+				<!-- Earlier roles -->
+				<div class="mt-6 rounded-box border border-base-300/60 bg-base-200/25 p-5">
+					<p
+						class="mb-3 flex items-center gap-2 text-xs font-bold tracking-widest text-base-content/50 uppercase"
+					>
+						<History class="h-3.5 w-3.5" />
+						Earlier
+					</p>
+					<div class="space-y-2.5">
+						{#each earlier as item (item.company)}
+							<div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 text-sm">
+								<span>
+									<span class="font-semibold text-base-content/90">{item.role}</span>
+									<span class="text-base-content/50"> · {item.company}</span>
+								</span>
+								<span class="text-xs text-base-content/45">{item.years}</span>
+							</div>
+						{/each}
+					</div>
+				</div>
 			</section>
 
 			<!-- Skills Section -->
@@ -423,8 +450,62 @@
 					<h2 class="text-3xl font-bold">Projects</h2>
 				</div>
 
+				<!-- Featured project -->
+				{#if featuredProject}
+					<a
+						href={featuredProject.link}
+						target="_blank"
+						rel="noopener"
+						class="group card mb-6 block overflow-hidden border border-base-300 bg-base-200/50 shadow-lg backdrop-blur-sm transition-all duration-300 hover:border-primary/50 hover:shadow-2xl"
+					>
+						<div class="grid md:grid-cols-2">
+							{#if featuredProject.image}
+								<div
+									class="relative flex items-center justify-center overflow-hidden bg-base-300/30 p-3"
+								>
+									<img
+										src={featuredProject.image}
+										alt="{featuredProject.name} — Google Play developer page"
+										class="w-full rounded-xl shadow-lg ring-1 ring-base-300 transition-transform duration-500 group-hover:scale-[1.02]"
+									/>
+								</div>
+							{/if}
+
+							<div class="flex flex-col p-6 md:p-8">
+								<div class="mb-2 flex items-center gap-2">
+									<span class="badge gap-1 border-primary/40 bg-primary/10 badge-sm text-primary">
+										<Sparkles class="h-3 w-3" />
+										Featured
+									</span>
+								</div>
+								<h3
+									class="group-hover:text-primary-focus mb-2 text-2xl font-bold text-primary transition-colors"
+								>
+									{featuredProject.name}
+								</h3>
+								<p class="mb-4 flex-1 text-sm text-base-content/70">
+									{featuredProject.desc}
+								</p>
+
+								<div class="mb-5 flex flex-wrap gap-2">
+									{#each featuredProject.stack as tag (tag)}
+										<span class="badge badge-ghost badge-sm">{tag}</span>
+									{/each}
+								</div>
+
+								<span class="btn w-full btn-sm btn-primary">
+									View on Google Play
+									<ExternalLink
+										class="h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"
+									/>
+								</span>
+							</div>
+						</div>
+					</a>
+				{/if}
+
 				<div class="grid gap-6 md:grid-cols-2">
-					{#each projects as proj, i (proj.name)}
+					{#each gridProjects as proj, i (proj.name)}
 						<div
 							class="group card flex flex-col border border-base-300 bg-base-200/50 p-6 shadow-lg backdrop-blur-sm transition-all duration-300 hover:-translate-y-2 hover:border-primary/50 hover:shadow-xl"
 							style="animation-delay: {i * 100}ms"
@@ -444,12 +525,21 @@
 								{/each}
 							</div>
 
-							<a class="group/btn btn w-full btn-sm btn-primary" href={proj.link} target="_blank">
-								View Project
-								<ExternalLink
-									class="h-4 w-4 transition-transform group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1"
-								/>
-							</a>
+							{#if proj.link}
+								<a class="group/btn btn w-full btn-sm btn-primary" href={proj.link} target="_blank">
+									View Project
+									<ExternalLink
+										class="h-4 w-4 transition-transform group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1"
+									/>
+								</a>
+							{:else}
+								<div
+									class="flex w-full items-center justify-center gap-1.5 rounded-full border border-base-300 py-1.5 text-xs font-medium text-base-content/50"
+								>
+									<Lock class="h-3.5 w-3.5" />
+									Client project
+								</div>
+							{/if}
 						</div>
 					{/each}
 				</div>
